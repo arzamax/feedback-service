@@ -1,3 +1,7 @@
+const mongoose = require('mongoose');
+
+const FeedbackType = mongoose.model('FeedbackType');
+
 class FeedbackController {
 
     constructor(model) {
@@ -13,8 +17,11 @@ class FeedbackController {
 
     async getFeedback(req, res) {
         const feedback = await this._model.find();
+        const feedbackToJSON = await Promise.all(feedback.map(async (feedbackItem) => {
+            return await feedbackItem.toJSONForClient(feedbackItem.feedbackType_id);
+        }));
 
-        res.json(feedback);
+        res.json(feedbackToJSON);
     }
 
     async createFeedback(req, res) {

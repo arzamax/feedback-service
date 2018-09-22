@@ -8,4 +8,4 @@ const FeedbackTypeSchema = Schema({
     }
 });
 
-mongoose.model('FeedbackType', FeedbackTypeSchema);
+module.exports = mongoose.model('FeedbackType', FeedbackTypeSchema);
